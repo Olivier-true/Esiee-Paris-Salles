@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!--
+        Ce template n'a pas du tout été  réutilisé pour une autre  utilisation que  celle pour laquelle il
+        a été prévu parce que le dev avait "la flemme". Et encore moins pour une interface de redirecteur
+        de flux smb.                                   Toute ressemblance serait bien entendu fortuite ^^
+        (C'est pour ça qu'il y a des tags ip partout) ;)
+        -->
+        <meta charset="UTF-8">
+        <!--meta http-equiv="refresh" content="2;"-->
+        <style>
+            .banner {
+                font-size: 20pt;
+                color: #fff;
+                font-family: 'Lucida Sans', sans-serif;
+            }
+            body {
+                background-color: black;
+            }
+            .uri {
+                color: #fff;
+                font-family: 'Lucida Sans';
+                height: 380px;
+                
+                background-color: #222;
+                padding-top: 2vh;
+                padding-bottom: 2vh;
+                
+            }
+            .uri p {
+                margin-left: 2vw;
+                margin-right: 2vw;
+            }
+            .ips {
+                font-family: 'Lucida Sans';
+                font-family: monospace;
+                height: auto;
+                width: 98vw;
+                background-color: #222;
+            }
+            .ips-elems {
+                margin: 2vh;
+                color: #eee;
+            }
+            .ip-item {
+                background-color: #444;
+                display: flex;
+                padding-left: 2vw;
+                
+            }
+            .ip-item2 {
+                background-color: #333;
+                display: flex;
+                padding-left: 2vw;
+            }
+            .chkb-allow {
+                color: green;
+                margin-left: 4vw;
+            }
+            .chkb-remove {
+                color: red;
+                margin-left: 1vw;
+            }
+            .nRetry {
+                color: orange;
+            }
+            .conPhr {
+                color: #fff;
+            }
+            .ResponsesBanner {
+                position: fixed;
+                top: 30vh;
+                left: 15vw;
+                width: 70vw;
+                height: 40vh;
+                background-color: #555;
+                color: #fff;
+                overflow-x: auto;
+                overflow-y: auto;
+                white-space: pre;
+                display: none;
+            }
+            .closeBanner {
+                position: fixed;
+                top: 30vh;
+                left: calc(85vw - 10vh);
+                width: 7.5vh;
+                height: 7.5vh;
+                background-color: red;
+                display: none;
+            }
+        </style>
+    </head>
+    <body>
+        <script>
+
+            function PrintResponse(elem, ip) {
+                try {
+                    document.querySelector('.ResponsesBanner').style.display = 'flex';
+                    document.querySelector('.closeBanner').style.display = 'flex';
+                    let http = new XMLHttpRequest();
+                    http.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+                        
+                            var response = http.responseText;
+                            document.querySelector('.ResponsesBanner').querySelector("p").textContent = response;
+                        }
+                    };
+                    http.open("GET", "/responsesFrom/" + ip, false);
+                    http.send();
+                    //location.reload();
+                    
+                    
+                } catch {
+                    document.querySelector('.ResponsesBanner').INNERText = "Fetch error";
+                }
+            }
+            
+        </script>
+        
+        <div style="display: flex;">
+            <h1 class="banner">\=====HOME-IP_Addr=====\</h1>
+        </div>
+        <div class="uri">
+            
+            <br>
+            <br>
+                
+                <br>
+                <p>
+                    Vous trouverez ici, la liste des salles disponibles ou aucun cours n'a lieu en ce moment meme
+                    <br>
+                    Le fonctionnement est simple: ci-dessous une liste vous indique le numero de la salle et l'heure jusqu'a
+                    <br>
+                    laquelle elle est disponible (avant le cours suivant). En cliquant sur un element de la liste,
+                    <br>
+                    il est possible d'avoir des infos supplementaires comme la capacite theorique de la salle et la liste
+                    <br>
+                    des heures auxquelles la salle se voit occupee. Je vous conseille de regarder ces infos juste pour vous
+                    <br>
+                    assurer que l'estimation de disponibilite est correcte et a le reporter a olivier.truong@edu.esiee.fr
+                    <br>
+                    si vous constatez que la correlation est mauvaise. (avec des screenshots svp &lt;3).
+                    <br>
+                    </p>
+        </div>
+        <br>
+        <div class="ResponsesBanner">
+            <div class="closeBanner" onclick="document.querySelector('.ResponsesBanner').style.display = 'none'; document.querySelector('.closeBanner').style.display = 'none';">
+                
+                </div>
+            <br>
+            <p></p>
+        </div>
+        <div class="ips">
+            <div class="ips-elems">
+                <br>
+=====cnt=====
+                <br>
+            </div>
+        </div>
+    </body>
+</html>
